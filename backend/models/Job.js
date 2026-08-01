@@ -49,7 +49,7 @@ const jobSchema = new mongoose.Schema(
     isRemote: { type: Boolean, default: false },
     salaryMin: { type: Number },
     salaryMax: { type: Number },
-    currency: { type: String, default: 'USD' },
+    currency: { type: String, default: 'INR' },
     vacancies: { type: Number, default: 1 },
     applicationDeadline: { type: Date },
     status: {

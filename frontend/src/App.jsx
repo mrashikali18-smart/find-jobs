@@ -228,8 +228,8 @@ function Jobs() {
     filters.category && { key: 'category', label: filters.category },
     filters.jobType && { key: 'jobType', label: filters.jobType },
     filters.experienceLevel && { key: 'experienceLevel', label: `${filters.experienceLevel} level` },
-    filters.salaryMin && { key: 'salaryMin', label: `Min $${Number(filters.salaryMin).toLocaleString()}` },
-    filters.salaryMax && { key: 'salaryMax', label: `Max $${Number(filters.salaryMax).toLocaleString()}` },
+    filters.salaryMin && { key: 'salaryMin', label: `Min ₹${Number(filters.salaryMin).toLocaleString('en-IN')}` },
+    filters.salaryMax && { key: 'salaryMax', label: `Max ₹${Number(filters.salaryMax).toLocaleString('en-IN')}` },
   ].filter(Boolean);
 
   const clearAllFilters = () => {
@@ -439,11 +439,12 @@ function Jobs() {
   );
 }
 
-const formatSalary = (min, max, currency = 'USD') => {
+const formatSalary = (min, max, currency = 'INR') => {
   if (!min && !max) return null;
-  const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
-  if (min && max) return `${currency} ${fmt(min)} – ${fmt(max)}`;
-  return `${currency} ${fmt(min || max)}+`;
+  const symbol = currency === 'INR' ? '₹' : `${currency} `;
+  const fmt = (n) => new Intl.NumberFormat('en-IN').format(n);
+  if (min && max) return `${symbol}${fmt(min)} – ${symbol}${fmt(max)}`;
+  return `${symbol}${fmt(min || max)}+`;
 };
 
 function JobDetails() {
