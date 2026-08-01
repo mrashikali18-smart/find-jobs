@@ -1,0 +1,38 @@
+# Node dependencies
+node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Build output
+frontend/dist/
+backend/dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Deployment artifacts
+find-jobs-updated.zip
+Find Jobs Project.zip
+zip_status.txt
+zip_create_status.txt
+zip_bundle_status.json
+
+# Vercel
+.vercel/
+.vercel
+.env*

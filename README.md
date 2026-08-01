@@ -181,15 +181,28 @@ cd ../backend && npm start
 Node process hosts both the API and the SPA. Set `CLIENT_URL` in the backend
 `.env` to whatever origin you're serving from.
 
-**Option B — split deploy (e.g. backend on Render, frontend on Vercel):**
-1. Deploy `backend/` (see `render.yaml` for a Render blueprint) and note its URL.
-2. In the frontend, set `VITE_API_URL=https://your-backend.onrender.com/api`
+**Option B — split deploy (recommended): backend on Render, frontend on Vercel**
+1. Deploy `backend/` to a host that supports Node + MongoDB. The included
+   `render.yaml` provides a Render blueprint, but Railway or Fly.io also work.
+2. In the frontend, set `VITE_API_URL=https://your-backend-url/api`
    (see `frontend/.env.example`) before building/deploying.
-3. Deploy `frontend/` to Vercel — `frontend/vercel.json` is already configured
-   for the Vite SPA (set the Vercel project root to `frontend/` if deploying
-   from this monorepo).
+3. Deploy `frontend/` to Vercel. `frontend/vercel.json` is already configured
+   for the Vite SPA. Set the Vercel project root to `frontend/` when importing
+   this monorepo.
 4. Set `CLIENT_URL` in the backend's env to your Vercel frontend URL so CORS
    and cookies work.
+
+### Automated Vercel deployment via GitHub Actions
+
+This repo includes a GitHub workflow that can deploy the frontend to Vercel
+whenever `main` is updated. To use it, add these repository secrets:
+
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
+
+The workflow is defined in `.github/workflows/vercel-deploy.yml` and deploys
+from the `frontend/` directory.
 
 ## API reference
 
