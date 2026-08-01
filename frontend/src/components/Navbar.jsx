@@ -33,9 +33,9 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-ink-700/10 bg-paper/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link to="/" className="flex shrink-0 items-center gap-2 font-display text-xl font-semibold text-ink-800">
+        <Link to="/" className="flex shrink-0 items-center gap-2 font-display text-lg font-semibold text-ink-800 sm:text-xl">
           <img src="/logo.svg" alt="Find Jobs logo" className="h-8 w-8" />
-          <span className="hidden sm:inline">Find Jobs 🔎</span>
+          <span>Find Jobs 🔎</span>
         </Link>
 
         {user && (
@@ -111,13 +111,22 @@ export default function Navbar() {
           )}
         </div>
 
-        <button
-          className="md:hidden"
-          onClick={() => setOpen((o) => !o)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-        >
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-1 md:hidden">
+          <Link
+            to={user ? '/profile' : '/login'}
+            className="rounded-full p-2 hover:bg-ink-50"
+            aria-label={user ? 'Profile' : 'Log in'}
+          >
+            <UserCircle2 size={22} className="text-ink-700" />
+          </Link>
+          <button
+            className=""
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+          >
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
 
       {open && (
