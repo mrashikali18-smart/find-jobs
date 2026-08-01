@@ -717,56 +717,80 @@ function Login() {
   };
 
   return (
-    <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink-800">Welcome back</h1>
-      <p className="mt-2 text-sm text-ink-700/60">Log in to continue your loop.</p>
-
-      <form onSubmit={handleSubmit} noValidate className="card mt-8 flex flex-col gap-4 p-6">
-        <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-800">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="input-field"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            aria-invalid={!!errors.email}
-            autoComplete="email"
-          />
-          {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+    <div className="mx-auto flex min-h-[80vh] max-w-4xl items-center px-4 py-12 sm:px-6">
+      <div className="grid w-full overflow-hidden rounded-3xl shadow-card sm:grid-cols-2">
+        <div className="hidden flex-col justify-between bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600 p-8 text-white sm:flex">
+          <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold">
+            <img src="/logo.svg" alt="Find Jobs logo" className="h-8 w-8" />
+            Find Jobs 🔎
+          </Link>
+          <div>
+            <h2 className="font-display text-2xl font-semibold leading-snug">
+              Pick up right where your search left off.
+            </h2>
+            <p className="mt-3 text-sm text-white/80">
+              Track applications, message recruiters, and get matched to roles that fit.
+            </p>
+          </div>
+          <p className="text-xs text-white/60">Search &middot; Apply &middot; Track &middot; Hire</p>
         </div>
 
-        <div>
-          <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-ink-800">
-            Password
-          </label>
-          <PasswordField
-            id="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            ariaInvalid={!!errors.password}
-          />
-          {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
+        <div className="bg-white p-6 sm:p-8">
+          <h1 className="font-display text-3xl font-semibold text-ink-800">Welcome back</h1>
+          <p className="mt-2 text-sm text-ink-700/60">Log in to continue your loop.</p>
+
+          <form onSubmit={handleSubmit} noValidate className="mt-6 flex flex-col gap-4">
+            <div>
+              <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-800">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                className="input-field focus:border-rose-500 focus:ring-rose-500/20"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                aria-invalid={!!errors.email}
+                autoComplete="email"
+              />
+              {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-ink-800">
+                Password
+              </label>
+              <PasswordField
+                id="password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                ariaInvalid={!!errors.password}
+              />
+              {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
+            </div>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="mt-2 w-full rounded-full bg-gradient-to-r from-rose-500 to-fuchsia-600 px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              {submitting ? 'Logging in…' : 'Log in'}
+            </button>
+          </form>
+
+          <p className="mt-6 text-center text-sm text-ink-700/60">
+            Don&apos;t have an account?{' '}
+            <Link to="/register" className="font-medium text-rose-600 hover:underline">
+              Sign up
+            </Link>
+          </p>
+
+          <div className="mt-6 rounded-xl bg-ink-50 p-4 text-xs text-ink-700/70">
+            <p className="font-medium text-ink-800">Demo accounts (after running the seed script)</p>
+            <p className="mt-1 font-mono">recruiter@demo.com / password123</p>
+            <p className="font-mono">jobseeker@demo.com / password123</p>
+          </div>
         </div>
-
-        <button type="submit" disabled={submitting} className="btn-primary mt-2 w-full">
-          {submitting ? 'Logging in…' : 'Log in'}
-        </button>
-      </form>
-
-      <p className="mt-6 text-center text-sm text-ink-700/60">
-        Don&apos;t have an account?{' '}
-        <Link to="/register" className="font-medium text-ink-800 hover:underline">
-          Sign up
-        </Link>
-      </p>
-
-      <div className="mt-8 rounded-xl bg-ink-50 p-4 text-xs text-ink-700/70">
-        <p className="font-medium text-ink-800">Demo accounts (after running the seed script)</p>
-        <p className="mt-1 font-mono">recruiter@demo.com / password123</p>
-        <p className="font-mono">jobseeker@demo.com / password123</p>
       </div>
     </div>
   );
@@ -812,98 +836,122 @@ function Register() {
   };
 
   return (
-    <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-ink-800">Join Find Jobs 🔎</h1>
-      <p className="mt-2 text-sm text-ink-700/60">Create an account to get started.</p>
-
-      <div className="mt-6 grid grid-cols-2 gap-2 rounded-full bg-ink-50 p-1">
-        {['jobseeker', 'recruiter'].map((role) => (
-          <button
-            key={role}
-            type="button"
-            onClick={() => setForm({ ...form, role })}
-            className={`rounded-full py-2 text-sm font-medium capitalize transition-colors ${
-              form.role === role ? 'bg-ink-700 text-paper' : 'text-ink-700/70'
-            }`}
-          >
-            {role === 'jobseeker' ? "I'm job seeking" : "I'm hiring"}
-          </button>
-        ))}
-      </div>
-
-      <form onSubmit={handleSubmit} noValidate className="card mt-6 flex flex-col gap-4 p-6">
-        <div>
-          <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-ink-800">
-            Full name
-          </label>
-          <input
-            id="name"
-            className="input-field"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            autoComplete="name"
-          />
-          {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
-        </div>
-
-        {form.role === 'recruiter' && (
+    <div className="mx-auto flex min-h-[85vh] max-w-4xl items-center px-4 py-12 sm:px-6">
+      <div className="grid w-full overflow-hidden rounded-3xl shadow-card sm:grid-cols-2">
+        <div className="hidden flex-col justify-between bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600 p-8 text-white sm:flex">
+          <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold">
+            <img src="/logo.svg" alt="Find Jobs logo" className="h-8 w-8" />
+            Find Jobs 🔎
+          </Link>
           <div>
-            <label htmlFor="companyName" className="mb-1.5 block text-sm font-medium text-ink-800">
-              Company name
-            </label>
-            <input
-              id="companyName"
-              className="input-field"
-              value={form.companyName}
-              onChange={(e) => setForm({ ...form, companyName: e.target.value })}
-            />
-            {errors.companyName && <p className="mt-1 text-xs text-red-600">{errors.companyName}</p>}
+            <h2 className="font-display text-2xl font-semibold leading-snug">
+              Join the loop between talent and opportunity.
+            </h2>
+            <p className="mt-3 text-sm text-white/80">
+              Whether you're hiring or job hunting, your next connection starts here.
+            </p>
           </div>
-        )}
-
-        <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-800">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="input-field"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            autoComplete="email"
-          />
-          {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+          <p className="text-xs text-white/60">Search &middot; Apply &middot; Track &middot; Hire</p>
         </div>
 
-        <div>
-          <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-ink-800">
-            Password
-          </label>
-          <PasswordField
-            id="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            ariaInvalid={!!errors.password}
-            autoComplete="new-password"
-          />
-          {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
-          {!errors.password && (
-            <p className="mt-1 text-xs text-ink-700/45">At least 8 characters.</p>
-          )}
+        <div className="bg-white p-6 sm:p-8">
+          <h1 className="font-display text-3xl font-semibold text-ink-800">Join Find Jobs 🔎</h1>
+          <p className="mt-2 text-sm text-ink-700/60">Create an account to get started.</p>
+
+          <div className="mt-6 grid grid-cols-2 gap-2 rounded-full bg-ink-50 p-1">
+            {['jobseeker', 'recruiter'].map((role) => (
+              <button
+                key={role}
+                type="button"
+                onClick={() => setForm({ ...form, role })}
+                className={`rounded-full py-2 text-sm font-medium capitalize transition-colors ${
+                  form.role === role ? 'bg-gradient-to-r from-rose-500 to-fuchsia-600 text-white' : 'text-ink-700/70'
+                }`}
+              >
+                {role === 'jobseeker' ? "I'm job seeking" : "I'm hiring"}
+              </button>
+            ))}
+          </div>
+
+          <form onSubmit={handleSubmit} noValidate className="mt-6 flex flex-col gap-4">
+            <div>
+              <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-ink-800">
+                Full name
+              </label>
+              <input
+                id="name"
+                className="input-field focus:border-rose-500 focus:ring-rose-500/20"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                autoComplete="name"
+              />
+              {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
+            </div>
+
+            {form.role === 'recruiter' && (
+              <div>
+                <label htmlFor="companyName" className="mb-1.5 block text-sm font-medium text-ink-800">
+                  Company name
+                </label>
+                <input
+                  id="companyName"
+                  className="input-field focus:border-rose-500 focus:ring-rose-500/20"
+                  value={form.companyName}
+                  onChange={(e) => setForm({ ...form, companyName: e.target.value })}
+                />
+                {errors.companyName && <p className="mt-1 text-xs text-red-600">{errors.companyName}</p>}
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-800">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                className="input-field focus:border-rose-500 focus:ring-rose-500/20"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                autoComplete="email"
+              />
+              {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-ink-800">
+                Password
+              </label>
+              <PasswordField
+                id="password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                ariaInvalid={!!errors.password}
+                autoComplete="new-password"
+              />
+              {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
+              {!errors.password && (
+                <p className="mt-1 text-xs text-ink-700/45">At least 8 characters.</p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="mt-2 w-full rounded-full bg-gradient-to-r from-rose-500 to-fuchsia-600 px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              {submitting ? 'Creating account…' : 'Create account'}
+            </button>
+          </form>
+
+          <p className="mt-6 text-center text-sm text-ink-700/60">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium text-rose-600 hover:underline">
+              Log in
+            </Link>
+          </p>
         </div>
-
-        <button type="submit" disabled={submitting} className="btn-primary mt-2 w-full">
-          {submitting ? 'Creating account…' : 'Create account'}
-        </button>
-      </form>
-
-      <p className="mt-6 text-center text-sm text-ink-700/60">
-        Already have an account?{' '}
-        <Link to="/login" className="font-medium text-ink-800 hover:underline">
-          Log in
-        </Link>
-      </p>
+      </div>
     </div>
   );
 }
