@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, Search, MessageSquare, Users } from 'lucide-react';
+import { Menu, X, Search, MessageSquare, Users, LayoutDashboard, ClipboardList, LogIn, UserPlus, UserCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import NotificationBell from './NotificationBell';
 import toast from 'react-hot-toast';
@@ -71,12 +71,16 @@ export default function Navbar() {
           )}
           {user?.role === 'jobseeker' && (
             <NavLink to="/applications" className={navLinkClass}>
-              Applications
+              <span className="flex items-center gap-1.5">
+                <ClipboardList size={15} /> Applications
+              </span>
             </NavLink>
           )}
           {user && (
             <NavLink to="/dashboard" className={navLinkClass}>
-              Dashboard
+              <span className="flex items-center gap-1.5">
+                <LayoutDashboard size={15} /> Dashboard
+              </span>
             </NavLink>
           )}
         </nav>
@@ -88,8 +92,8 @@ export default function Navbar() {
                 <MessageSquare size={19} className="text-ink-700" />
               </NavLink>
               <NotificationBell />
-              <Link to="/profile" className="ml-1 text-sm font-medium text-ink-700/80 hover:text-ink-800">
-                {user.name.split(' ')[0]}
+              <Link to="/profile" className="ml-1 flex items-center gap-1.5 text-sm font-medium text-ink-700/80 hover:text-ink-800">
+                <UserCircle2 size={18} /> {user.name.split(' ')[0]}
               </Link>
               <button onClick={handleLogout} className="btn-outline !py-2">
                 Log out
@@ -97,11 +101,11 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/login" className="btn-ghost !py-2">
-                Log in
+              <Link to="/login" className="btn-ghost !py-2 flex items-center gap-1.5">
+                <LogIn size={16} /> Log in
               </Link>
-              <Link to="/register" className="btn-accent !py-2">
-                Get started
+              <Link to="/register" className="btn-accent !py-2 flex items-center gap-1.5">
+                <UserPlus size={16} /> Get started
               </Link>
             </>
           )}
@@ -158,12 +162,16 @@ export default function Navbar() {
             )}
             {user?.role === 'jobseeker' && (
               <NavLink to="/applications" className={navLinkClass} onClick={() => setOpen(false)}>
-                Applications
+                <span className="flex items-center gap-1.5">
+                  <ClipboardList size={15} /> Applications
+                </span>
               </NavLink>
             )}
             {user && (
               <NavLink to="/dashboard" className={navLinkClass} onClick={() => setOpen(false)}>
-                Dashboard
+                <span className="flex items-center gap-1.5">
+                  <LayoutDashboard size={15} /> Dashboard
+                </span>
               </NavLink>
             )}
             <hr className="border-ink-700/10" />
@@ -173,11 +181,11 @@ export default function Navbar() {
               </button>
             ) : (
               <>
-                <Link to="/login" className="btn-ghost w-full" onClick={() => setOpen(false)}>
-                  Log in
+                <Link to="/login" className="btn-ghost w-full flex items-center justify-center gap-1.5" onClick={() => setOpen(false)}>
+                  <LogIn size={16} /> Log in
                 </Link>
-                <Link to="/register" className="btn-accent w-full" onClick={() => setOpen(false)}>
-                  Get started
+                <Link to="/register" className="btn-accent w-full flex items-center justify-center gap-1.5" onClick={() => setOpen(false)}>
+                  <UserPlus size={16} /> Get started
                 </Link>
               </>
             )}

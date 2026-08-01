@@ -106,6 +106,21 @@ function Home() {
               I&apos;m hiring — post a job
             </Link>
           </div>
+
+          <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-paper/10 pt-6">
+            <div>
+              <p className="font-display text-2xl font-semibold text-paper">25+</p>
+              <p className="text-xs uppercase tracking-wide text-paper/50">Open roles</p>
+            </div>
+            <div>
+              <p className="font-display text-2xl font-semibold text-paper">10+</p>
+              <p className="text-xs uppercase tracking-wide text-paper/50">Companies hiring</p>
+            </div>
+            <div>
+              <p className="font-display text-2xl font-semibold text-paper">Pan-India</p>
+              <p className="text-xs uppercase tracking-wide text-paper/50">& remote roles</p>
+            </div>
+          </div>
         </div>
       </section>
 
