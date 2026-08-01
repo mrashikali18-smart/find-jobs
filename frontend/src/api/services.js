@@ -15,6 +15,7 @@ export const userApi = {
     }),
   dashboard: () => api.get('/users/dashboard'),
   importLinkedIn: (data) => api.post('/users/import-linkedin', data),
+  suggestions: () => api.get('/users/suggestions'),
 };
 
 export const companyApi = {

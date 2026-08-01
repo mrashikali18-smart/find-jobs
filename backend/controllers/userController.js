@@ -186,10 +186,23 @@ const getPublicProfile = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, user });
 });
 
+// @desc    Get people the user might want to connect with
+// @route   GET /api/users/suggestions
+// @access  Private
+const getSuggestions = asyncHandler(async (req, res) => {
+  const me = await User.findById(req.user._id).select('connections');
+  const excludeIds = [req.user._id, ...(me?.connections || [])];
+  const users = await User.find({ _id: { $nin: excludeIds } })
+    .select('name headline location role')
+    .limit(8);
+  res.json({ users });
+});
+
 module.exports = {
   updateProfile,
   uploadResume,
   getDashboard,
   getPublicProfile,
   importLinkedInProfile,
+  getSuggestions,
 };

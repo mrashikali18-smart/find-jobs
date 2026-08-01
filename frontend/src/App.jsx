@@ -2284,15 +2284,18 @@ function PublicProfile() {
 function Connections() {
   const [connections, setConnections] = useState([]);
   const [pending, setPending] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [sentTo, setSentTo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState('connections');
 
   const load = () => {
     setLoading(true);
-    Promise.all([connectionApi.mine(), connectionApi.pending()])
-      .then(([connRes, pendRes]) => {
+    Promise.all([connectionApi.mine(), connectionApi.pending(), userApi.suggestions()])
+      .then(([connRes, pendRes, sugRes]) => {
         setConnections(connRes.data.connections);
         setPending(pendRes.data.requests);
+        setSuggestions(sugRes.data.users || []);
       })
       .finally(() => setLoading(false));
   };
@@ -2300,6 +2303,16 @@ function Connections() {
   useEffect(() => {
     load();
   }, []);
+
+  const handleConnect = async (id) => {
+    try {
+      await connectionApi.send(id);
+      setSentTo((s) => [...s, id]);
+      toast.success('Connection request sent');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Could not send request');
+    }
+  };
 
   const handleRespond = async (id, status) => {
     try {
@@ -2345,7 +2358,7 @@ function Connections() {
       {tab === 'connections' && (
         <div className="mt-6 flex flex-col gap-3">
           {connections.length === 0 ? (
-            <p className="text-sm text-ink-700/60">No connections yet.</p>
+            <p className="text-sm text-ink-700/60">No connections yet — send a request below to get started.</p>
           ) : (
             connections.map((c) => (
               <Link key={c._id} to={`/profile/${c._id}`} className="card flex items-center gap-3 p-4 hover:-translate-y-0.5 transition-transform">
@@ -2359,6 +2372,34 @@ function Connections() {
               </Link>
             ))
           )}
+        </div>
+      )}
+
+      {suggestions.length > 0 && (
+        <div className="mt-10">
+          <h2 className="font-display text-lg font-semibold text-ink-800">People you may know</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {suggestions.map((s) => (
+              <div key={s._id} className="card flex items-center justify-between gap-3 p-4">
+                <Link to={`/profile/${s._id}`} className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-ink-50 font-display text-ink-700">
+                    {s.name?.[0]?.toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-ink-800">{s.name}</p>
+                    <p className="text-xs text-ink-700/60">{s.headline || s.location || s.role}</p>
+                  </div>
+                </Link>
+                <button
+                  onClick={() => handleConnect(s._id)}
+                  disabled={sentTo.includes(s._id)}
+                  className="btn-outline !py-1.5 shrink-0"
+                >
+                  {sentTo.includes(s._id) ? 'Sent' : 'Connect'}
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
